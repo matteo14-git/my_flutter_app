@@ -24,6 +24,7 @@ class MyHome extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.all(20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 questions[questionIndex].question,
@@ -39,6 +40,10 @@ class MyHome extends StatelessWidget {
               ElevatedButton(
                 onPressed: (() {}),
                 child: Text('FALSE'),
+              ),
+              Text(
+                'Il tuo punteggio è 0',
+                style: TextStyle(fontSize: 20),
               ),
             ],
           ),
