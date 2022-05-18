@@ -5,6 +5,13 @@ class MyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Hello, world!');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My app'),
+      ),
+      body: Center(
+        child: Text('Hello, world!'),
+      ),
+    );
   }
 }
