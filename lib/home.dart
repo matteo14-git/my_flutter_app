@@ -9,6 +9,16 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int questionIndex = 0;
+    int score = 0;
+
+    void eval(bool correctAnswer, bool givenAnswer) {
+      if (correctAnswer == givenAnswer) {
+        score++;
+      }
+      questionIndex++;
+      print('QI $questionIndex');
+      print('score $score');
+    }
 
     List<Question> questions = [
       Question(
@@ -34,11 +44,11 @@ class MyHome extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: null,
+                onPressed: () => eval(questions[questionIndex].answer, true),
                 child: Text('TRUE'),
               ),
               ElevatedButton(
-                onPressed: (() {}),
+                onPressed: () => eval(questions[questionIndex].answer, true),
                 child: Text('FALSE'),
               ),
               Text(
