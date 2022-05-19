@@ -1,30 +1,35 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/models/question.dart';
 
-class MyHome extends StatelessWidget {
+class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
 
   @override
+  State<MyHome> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  int questionIndex = 0;
+  int score = 0;
+  List<Question> questions = [
+    Question(
+        question: 'Il cavallo bianco di Napoleone era bianco?', answer: true),
+    Question(question: 'Vero è falso?', answer: false),
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    int questionIndex = 0;
-    int score = 0;
-
     void eval(bool correctAnswer, bool givenAnswer) {
-      if (correctAnswer == givenAnswer) {
-        score++;
-      }
-      questionIndex++;
-      print('QI $questionIndex');
-      print('score $score');
+      setState(() {
+        if (correctAnswer == givenAnswer) {
+          score = score + 1;
+        }
+        questionIndex = questionIndex + 1;
+        if (questionIndex >= questions.length) {
+          questionIndex = 0;
+        }
+      });
     }
-
-    List<Question> questions = [
-      Question(
-          question: 'Il cavallo bianco di Napoleone era bianco?', answer: true),
-      Question(question: 'Vero è falso?', answer: false),
-    ];
 
     return Scaffold(
         appBar: AppBar(
@@ -48,11 +53,11 @@ class MyHome extends StatelessWidget {
                 child: Text('TRUE'),
               ),
               ElevatedButton(
-                onPressed: () => eval(questions[questionIndex].answer, true),
+                onPressed: () => eval(questions[questionIndex].answer, false),
                 child: Text('FALSE'),
               ),
               Text(
-                'Il tuo punteggio è 0',
+                'Il tuo punteggio è $score',
                 style: TextStyle(fontSize: 20),
               ),
             ],
