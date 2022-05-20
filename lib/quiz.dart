@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:my_flutter_app/models/question.dart';
 
 class Quiz extends StatelessWidget {
-  final question;
-  final eval;
+  final Question question;
+  final Function eval;
 
-  const Quiz({this.question, this.eval});
+  const Quiz({required this.question, required this.eval});
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Summary extends StatelessWidget {
-  // const Summary({Key? key}) : super(key: key);
-  final score;
-  final reset;
+  
+  final int score;
+  final Function reset;
 
-  const Summary({this.score, this.reset});
+  const Summary({required this.score, required this.reset});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Summary extends StatelessWidget {
           style: TextStyle(fontSize: 20),
         ),
         ElevatedButton(
-          onPressed: reset,
+          onPressed: () => reset(),
           child: Text('Reset'),
         ),
       ],
