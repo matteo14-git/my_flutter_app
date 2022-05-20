@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/models/question.dart';
+import 'package:my_flutter_app/quiz.dart';
+import 'package:my_flutter_app/summary.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -41,45 +43,22 @@ class _MyHomeState extends State<MyHome> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text('My app'),
-        ),
-        body: Container(
+      appBar: AppBar(
+        title: Text('My app'),
+      ),
+      body: Container(
           width: double.infinity,
           padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: resetQuiz
-                ? [
-                    Text(
-                      'Il tuo punteggio è $score',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    ElevatedButton(
-                      onPressed: reset,
-                      child: Text('Reset'),
-                    ),
-                  ]
-                : [
-                    Text(
-                      questions[questionIndex].question,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () =>
-                          eval(questions[questionIndex].answer, true),
-                      child: Text('TRUE'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () =>
-                          eval(questions[questionIndex].answer, false),
-                      child: Text('FALSE'),
-                    ),
-                  ],
-          ),
-        ));
+        child: resetQuiz
+            ? Summary(
+                score: score,
+                reset: reset,
+              )
+            : Quiz(
+                eval: eval,
+                question: questions[questionIndex],
+              ),
+      ),
+    );
   }
 }
