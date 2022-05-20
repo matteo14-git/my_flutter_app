@@ -11,6 +11,7 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   int questionIndex = 0;
   int score = 0;
+  bool resetQuiz = false;
   List<Question> questions = [
     Question(
         question: 'Il cavallo bianco di Napoleone era bianco?', answer: true),
@@ -26,8 +27,16 @@ class _MyHomeState extends State<MyHome> {
         }
         questionIndex = questionIndex + 1;
         if (questionIndex >= questions.length) {
-          questionIndex = 0;
+          resetQuiz = true;
         }
+      });
+    }
+
+    void reset() {
+      setState(() {
+        questionIndex = 0;
+        score = 0;
+        resetQuiz = false;
       });
     }
 
@@ -40,27 +49,36 @@ class _MyHomeState extends State<MyHome> {
           padding: EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                questions[questionIndex].question,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => eval(questions[questionIndex].answer, true),
-                child: Text('TRUE'),
-              ),
-              ElevatedButton(
-                onPressed: () => eval(questions[questionIndex].answer, false),
-                child: Text('FALSE'),
-              ),
-              Text(
-                'Il tuo punteggio è $score',
-                style: TextStyle(fontSize: 20),
-              ),
-            ],
+            children: resetQuiz
+                ? [
+                    Text(
+                      'Il tuo punteggio è $score',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    ElevatedButton(
+                      onPressed: reset,
+                      child: Text('Reset'),
+                    ),
+                  ]
+                : [
+                    Text(
+                      questions[questionIndex].question,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () =>
+                          eval(questions[questionIndex].answer, true),
+                      child: Text('TRUE'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () =>
+                          eval(questions[questionIndex].answer, false),
+                      child: Text('FALSE'),
+                    ),
+                  ],
           ),
         ));
   }
